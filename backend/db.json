@@ -1,0 +1,138 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "nom": "Utilisateur Principal",
+      "email": "user@budget.app",
+      "devise": "XOF",
+      "date_creation": "2026-02-01"
+    }
+  ],
+
+  "accounts": [
+    {
+      "id": "a1",
+      "nom": "Cash",
+      "type": "CASH",
+      "solde_initial": 50000
+    },
+    {
+      "id": "a2",
+      "nom": "Mobile Money",
+      "type": "MOBILE_MONEY",
+      "solde_initial": 100000
+    },
+    {
+      "id": "a3",
+      "nom": "Banque",
+      "type": "BANQUE",
+      "solde_initial": 250000
+    },
+    {
+      "id": "a4",
+      "nom": "Épargne",
+      "type": "EPARGNE",
+      "solde_initial": 0
+    }
+  ],
+
+  "categories": [
+    {
+      "id": "c1",
+      "nom": "Transport",
+      "type": "DEPENSE",
+      "icone": "bus"
+    },
+    {
+      "id": "c2",
+      "nom": "Nourriture",
+      "type": "DEPENSE",
+      "icone": "restaurant"
+    },
+    {
+      "id": "c3",
+      "nom": "Logement",
+      "type": "DEPENSE",
+      "icone": "home"
+    },
+    {
+      "id": "c4",
+      "nom": "Salaire",
+      "type": "REVENU",
+      "icone": "cash"
+    },
+    {
+      "id": "c5",
+      "nom": "Freelance",
+      "type": "REVENU",
+      "icone": "briefcase"
+    },
+    {
+      "id": "c6",
+      "nom": "Épargne",
+      "type": "EPARGNE",
+      "icone": "wallet"
+    }
+  ],
+
+  "transactions": [
+    {
+      "id": "t1",
+      "montant": 5000,
+      "date": "2026-02-01",
+      "note": "Taxi",
+      "type": "DEPENSE",
+      "categorieId": "c1",
+      "compteId": "a1",
+      "date_creation": "2026-02-01T08:30:00"
+    },
+    {
+      "id": "t2",
+      "montant": 15000,
+      "date": "2026-02-02",
+      "note": "Courses",
+      "type": "DEPENSE",
+      "categorieId": "c2",
+      "compteId": "a2",
+      "date_creation": "2026-02-02T18:00:00"
+    },
+    {
+      "id": "t3",
+      "montant": 200000,
+      "date": "2026-02-01",
+      "note": "Salaire mensuel",
+      "type": "REVENU",
+      "categorieId": "c4",
+      "compteId": "a3",
+      "date_creation": "2026-02-01T07:00:00"
+    },
+    {
+      "id": "t4",
+      "montant": 30000,
+      "date": "2026-02-03",
+      "note": "Mise en épargne",
+      "type": "DEPENSE",
+      "categorieId": "c6",
+      "compteId": "a3",
+      "date_creation": "2026-02-03T09:00:00"
+    }
+  ],
+
+  "budgets": [
+    {
+      "id": "b1",
+      "montant_max": 150000,
+      "mois": 2,
+      "annee": 2026
+    }
+  ],
+
+  "savings": [
+    {
+      "id": "s1",
+      "montant": 30000,
+      "objectif": "Fonds d’urgence",
+      "date_creation": "2026-02-03"
+    }
+  ]
+}
