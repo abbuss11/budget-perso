@@ -3,35 +3,37 @@
     <ion-content class="ion-padding">
       <div class="auth-header">
         <ion-text color="primary">
-          <h1>Budget Perso</h1>
+          <h1>Créer un compte</h1>
         </ion-text>
-        <p>Connectez-vous pour suivre vos finances.</p>
+        <p>Enregistrez-vous pour démarrer votre suivi budgétaire.</p>
       </div>
 
       <ion-card>
         <ion-card-content>
           <ion-item>
-            <ion-input v-model="email" label="Email" type="email" placeholder="demo@example.com" />
+            <ion-input v-model="name" label="Nom complet" placeholder="Votre nom" />
           </ion-item>
           <ion-item>
-            <ion-input v-model="password" label="Mot de passe" type="password" placeholder="demo123" />
+            <ion-input v-model="email" label="Email" type="email" placeholder="vous@email.com" />
+          </ion-item>
+          <ion-item>
+            <ion-input v-model="password" label="Mot de passe" type="password" />
           </ion-item>
           <ion-item lines="none">
-            <ion-checkbox v-model="remember" />
-            <ion-label class="ion-margin-start">Se souvenir de moi</ion-label>
+            <ion-checkbox v-model="accepted" />
+            <ion-label class="ion-margin-start">J'accepte les conditions d'utilisation</ion-label>
           </ion-item>
-          <ion-button expand="block" :disabled="loading" @click="handleLogin">
-            {{ loading ? 'Connexion...' : 'Se connecter' }}
+          <ion-button expand="block" :disabled="loading" @click="handleSignup">
+            {{ loading ? 'Création...' : 'Créer mon compte' }}
           </ion-button>
           <ion-text color="danger" v-if="error" class="ion-margin-top">
             <p>{{ error }}</p>
           </ion-text>
           <div class="auth-footer">
             <p>
-              Pas de compte ?
-              <ion-router-link href="/signup">Créer un compte</ion-router-link>
+              Déjà inscrit ?
+              <ion-router-link href="/login">Se connecter</ion-router-link>
             </p>
-            <ion-note>Compte démo: demo@example.com / demo123</ion-note>
           </div>
         </ion-card-content>
       </ion-card>
@@ -49,7 +51,6 @@ import {
   IonInput,
   IonItem,
   IonLabel,
-  IonNote,
   IonPage,
   IonRouterLink,
   IonText
@@ -59,29 +60,35 @@ import { useRouter } from 'vue-router';
 import { authService } from '../services/authService';
 
 const router = useRouter();
+const name = ref('');
 const email = ref('');
 const password = ref('');
-const remember = ref(true);
+const accepted = ref(false);
 const loading = ref(false);
 const error = ref('');
 
-const handleLogin = async () => {
+const handleSignup = async () => {
   error.value = '';
+  if (!name.value || !email.value || !password.value) {
+    error.value = 'Merci de remplir tous les champs.';
+    return;
+  }
+  if (!accepted.value) {
+    error.value = 'Vous devez accepter les conditions.';
+    return;
+  }
+
   loading.value = true;
   try {
-    await authService.login(email.value.trim());
-    if (!remember.value) {
-      window.addEventListener(
-        'beforeunload',
-        () => {
-          localStorage.removeItem('budget_user');
-        },
-        { once: true }
-      );
-    }
+    await authService.signup({
+      nom: name.value,
+      email: email.value,
+      devise: 'XOF',
+      date_creation: new Date().toISOString()
+    });
     await router.replace('/tabs/dashboard');
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Connexion impossible.';
+    error.value = err instanceof Error ? err.message : 'Inscription impossible.';
   } finally {
     loading.value = false;
   }
@@ -97,10 +104,5 @@ const handleLogin = async () => {
 .auth-footer {
   margin-top: 16px;
   text-align: center;
-}
-
-ion-note {
-  display: block;
-  margin-top: 12px;
 }
 </style>
